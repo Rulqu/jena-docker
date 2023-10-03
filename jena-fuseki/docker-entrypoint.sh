@@ -16,6 +16,7 @@
 
 set -e
 
+chown fuseki:fuseki $FUSEKI_BASE
 if [ ! -f "$FUSEKI_BASE/shiro.ini" ] ; then
   # First time
   echo "###################################"
@@ -46,7 +47,7 @@ if [ -n "$ADMIN_PASSWORD" ] ; then
 fi
 
 # fork 
-exec "$@" &
+exec su -s /bin/bash -c "$@" fuseki &
 
 TDB_VERSION=''
 if [ ! -z ${TDB+x} ] && [ "${TDB}" = "2" ] ; then 
